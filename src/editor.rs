@@ -1,30 +1,33 @@
-use crate::config::Config;
+use crate::event::Event;
+use crate::grid::GridItems;
 use crate::window::Window;
-use raylib::color::Color;
-use raylib::prelude::RaylibDraw;
+use raylib::RaylibHandle;
 
-pub enum GridItems<'a> {
-    Single(&'a Window),
-    SplitRight(&'a Window, &'a Window),
-    SplitBottom(&'a Window, &'a Window),
-    Split4(&'a Window, &'a Window, &'a Window, &'a Window),
-}
-
+#[allow(unused)]
 pub struct Editor<'a> {
     selected: Option<&'a mut Window>,
-    config: Config,
-    items: GridItems<'a>,
+    grid: GridItems<'a>,
 }
 
 impl<'a> Editor<'a> {
-    pub fn run() {
-        let (mut rl, thread) = raylib::init().size(640, 480).title("Hello, World").build();
+    pub fn get_event(&mut self, handle: &mut RaylibHandle) -> Option<Event> {
+        match handle.get_key_pressed()? {
+            _ => todo!("Return the event bound to the key."),
+        }
+    }
 
+    pub fn run(self) {
+        let (mut rl, thread) = raylib::init().size(640, 480).title("Hello, World").build();
         while !rl.window_should_close() {
             let mut d = rl.begin_drawing(&thread);
+            self.grid.draw(&mut d)
+        }
+    }
 
-            d.clear_background(Color::WHITE);
-            d.draw_text("Hello, world!", 12, 12, 20, Color::BLACK);
+    pub fn new() -> Self {
+        Editor {
+            selected: None,
+            grid: GridItems::None,
         }
     }
 }

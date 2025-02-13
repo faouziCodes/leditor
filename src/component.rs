@@ -1,7 +1,7 @@
 use crate::event;
-use raylib::RaylibHandle;
+use raylib::prelude::RaylibDrawHandle;
 
 pub trait Component {
-    fn handle_event(&mut self, event: event::Event);
-    fn draw(&self, handle: &mut RaylibHandle);
+    fn handle_event(&mut self, event: event::ComponentEvent);
+    fn draw(&self, handle: &mut RaylibDrawHandle);
 }

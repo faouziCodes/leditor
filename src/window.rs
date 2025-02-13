@@ -1,7 +1,15 @@
-use crate::component;
+use raylib::prelude::RaylibDrawHandle;
 
-pub struct Window {
-    component: dyn component::Component,
+use crate::event;
+
+pub struct Window {}
+
+impl Window {
+    pub fn handle_event(&mut self, event: event::WindowEvent) {
+        todo!()
+    }
+
+    pub fn draw(&self, handle: &mut RaylibDrawHandle) {
+        todo!()
+    }
 }
-
-impl Window {}
